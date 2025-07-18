@@ -27,6 +27,4 @@ A simple full-stack recipe sharing app where users can create, view, and manage 
 ---
 
 
-```bash
-git clone https://github.com/s0urabh7/Recipe-Book.git
-cd Recipe-Book
+
