@@ -22,10 +22,16 @@ function Login() {
               headers: { 'Content-Type': 'application/json' }
             })
             console.log("Login successfully", response.data)
-            setUser({username})
-            setUserId(response.data.userId)
-            console.log(response.data.userId)
-            navigate('/')
+            if(response.data.userId){
+                setUserId(response.data.userId)
+                console.log(response.data.userId)
+                navigate('/')
+                setUser({username})
+            }
+            else{
+                alert("Incorrect credentials")
+            }
+            
 
         } catch (error) {
             console.error("Error sending data:", error);

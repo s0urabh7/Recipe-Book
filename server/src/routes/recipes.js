@@ -1,6 +1,7 @@
 import {Router} from "express"
 import Recipe from "../models/recipe.js"
 import User from "../models/user.js"
+import { verifyJWT } from "../middlewares/authentication.js";
 
 const router = Router()
 
@@ -13,17 +14,21 @@ router.get("/", async(req, res)=>{
     }
 })
 
-router.post("/", async(req, res)=>{
-    const {recipeName, ingredients, instructions, cookingTime, recipeOwner} = req.body
-    const newRecipe = await Recipe.create({recipeName, ingredients, instructions, cookingTime, recipeOwner})
-    await newRecipe.save()
-    return res.json({message: "Recipe created successfully"})
+router.post("/", verifyJWT, async(req, res)=>{
+    try {
+        const {recipeName, ingredients, instructions, cookingTime, recipeOwner} = req.body
+        const newRecipe = await Recipe.create({recipeName, ingredients, instructions, cookingTime, recipeOwner})
+        await newRecipe.save()
+        return res.json({message: "Recipe created successfully"})
+    } catch (error) {
+        console.log("error: ", error)
+    }
 })
 
-router.put("/", async(req, res)=>{
+router.put("/", verifyJWT, async(req, res)=>{
     try {
         const recipe = await Recipe.findById(req.body.recipeId)
-        const user = await User.findById(req.body.recipeId)
+        const user = await User.findById(req.body.userId)
         user.savedRecipes.push(recipe)
         await user.save()
         return res.json({savedRecipes: user.savedRecipes})
@@ -32,18 +37,18 @@ router.put("/", async(req, res)=>{
     }
 })
 
-router.get("/savedRecipes/ids", async(req, res)=>{
+router.get("/savedRecipes/ids/:userId", verifyJWT, async(req, res)=>{
     try {
-        const user = await User.findById(req.body.userId)
+        const user = await User.findById(req.params.userId)
         return res.json({savedRecipes: user?.savedRecipes})
     } catch (error) {
         return res.json(error)
     }
 })
 
-router.get("/savedRecipes", async(req, res)=>{
+router.get("/savedRecipes/:userId", verifyJWT, async(req, res)=>{
     try {
-        const user = await User.findById(req.body.userID)
+        const user = await User.findById(req.params.userId)
         const savedRecipes = await Recipe.find({
             _id: {$in: user.savedRecipes}
         })

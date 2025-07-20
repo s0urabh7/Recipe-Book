@@ -28,6 +28,7 @@ function Navbar() {
           <div className='space-x-12 font-bold text-4xl'>
             <Link to="/" className="hover:text-gray-300">Home</Link>
             <Link to="/createRecipe" className="hover:text-gray-300">Create Recipe</Link>
+            <Link to="/savedRecipes" className="hover:text-gray-300">Saved Recipes</Link>
             <div className='inline-block'><LogoutBtn /></div>
           </div>
         </div>

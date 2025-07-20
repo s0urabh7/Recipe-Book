@@ -4,7 +4,8 @@ import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home'
-import Login from './pages/login'
+import Login from './pages/Login.jsx'
+import SavedRecipes from './pages/SavedRecipes.jsx'
 import Register from './pages/register.jsx'
 import CreateRecipe from './pages/CreateRecipe.jsx'
 
@@ -26,9 +27,13 @@ const router = createBrowserRouter([
           element: <Register/>
         },
         {
+          path: "/savedRecipes",
+          element: <SavedRecipes/>
+        },
+        {
           path: "/createRecipe",
           element: <CreateRecipe/>
-        }
+        },
       ]
     }
   ])
