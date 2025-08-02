@@ -2,7 +2,8 @@ import { Router } from "express";
 import User from "../models/user.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import 
+import { verifyJWT } from "../middlewares/authentication.js";
+
 
 const router = Router();
 
@@ -46,7 +47,7 @@ router.post("/login", async(req, res)=>{
         }, process.env.ACCESS_TOKEN_SECRET)
         const options = {
             httpOnly: true,
-            secure: true
+            secure: false
         }
         res.cookie("accessToken", token, options).json({userId: user._id});
     } catch (error) {
@@ -61,6 +62,10 @@ router.post("/logout", async(req, res)=>{
         secure: true
     }
     res.clearCookie("accessToken", options).json({message: "logged out successfully"})
+})
+
+router.get("/me", verifyJWT, async(req, res)=>{
+    res.status(200).json({ id: req.user.id });
 })
 
 export { router as userRouter };

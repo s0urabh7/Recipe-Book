@@ -17,6 +17,9 @@ const recipeSchema = new Schema({
         type: Number,
     
     },
+    recipeImage: {
+        type: String
+    },
     recipeOwner: {
         type: Schema.Types.ObjectId,
         ref: "User",

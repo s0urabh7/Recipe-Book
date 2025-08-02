@@ -2,10 +2,12 @@ import React from 'react'
 import axios from 'axios'
 import AuthContext from '../context/authContext'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function LogoutBtn() {
 
     const {setUser} = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const handleLogout = async()=>{
         try {
@@ -13,6 +15,7 @@ function LogoutBtn() {
                 withCredentials: true
             })
             setUser(null)
+            navigate('/login')
         } catch (error) {
             console.log("Logout error: ", error)
         }

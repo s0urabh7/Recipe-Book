@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import LogoutBtn from './LogoutBtn'
 import { useContext } from 'react'
 import AuthContext from '../context/authContext'
@@ -11,7 +11,7 @@ function Navbar() {
 
   return (!user) ? (
     <div>
-        <nav className='bg-gray-800 text-white px-4 py-6'>
+        <nav className='bg-gray-800 text-gray-200 px-4 py-6'>
           <div className='container flex justify-between items-center mx-auto'>
             <div className='space-x-12 font-bold text-4xl'>
               <Link to="/" className="hover:text-gray-300">Home</Link>
@@ -23,7 +23,7 @@ function Navbar() {
     </div>
   ) : (
   <div>
-      <nav className='bg-gray-800 text-white px-4 py-6'>
+      <nav className='bg-gray-800 text-gray-300 px-4 py-6'>
         <div className='container flex justify-between items-center mx-auto'>
           <div className='space-x-12 font-bold text-4xl'>
             <Link to="/" className="hover:text-gray-300">Home</Link>
